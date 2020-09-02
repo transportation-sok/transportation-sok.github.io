@@ -1,0 +1,78 @@
+body {
+font-family: -apple-system, BlinkMacSystemFont, “Segoe UI”, Roboto, “Helvetica Neue”, Arial, sans-serif, “Apple Color Emoji”, “Segoe UI Emoji”, “Segoe UI Symbol”;
+/* default is 1rem or 16px */
+font-size: 12px;
+font-weight: 400;
+line-height: 1.5;
+}
+
+/* Increase all font sizes on mobile */
+@media (max-width: 767px) {
+
+body {
+/* default is 1rem or 16px */
+font-size: 25px;
+}
+
+}
+
+.cardHeader {
+	background-color: #55595c;
+	height: 200px;
+	margin-bottom: 0px!important;
+}
+
+.cardObjective {
+	text-align: right;
+	width:100%;
+	height: 100%;
+	position: absolute;
+	padding: 5px;
+	vertical-align: top;
+}
+
+
+.cardTitle {
+	color: white;
+	width:100%;
+	text-align: center;
+	margin-top: 10px;
+}
+
+
+.cardTask {
+	text-align: left;
+	width:100%;
+	height: 100%;
+	position: absolute;
+	padding: 5px;
+	display: table-cell;
+	vertical-align: bottom;
+}
+
+.cardVisualization {
+	text-align: right;
+	width:100%;
+	height: 100%;
+	vertical-align: bottom;
+	display: table-cell;
+	position: absolute;
+	padding: 5px;
+}
+
+/* at: For font-awesome.min.js */
+/* Make icons red. */
+i{
+	color:#C03035;
+}
+
+i:hover {
+	outline: none;
+	text-decoration:none;
+	color:#4fcccd;
+}
+
+i:focus {
+	outline:none;
+	outline-offset: 0;
+}

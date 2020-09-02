@@ -1,0 +1,3 @@
+Bibref,Component: Vehicles,Component: Intersection,Component: Roadside,Component: TMC,Component: Cloud end-points,Technology: Sensing,Technology: Control,Technology: Inference,Technology: Application,Technology: Communication,Attack Category: Sensing Vulnerabilities,Attack Category: Service vulnerabilities,Attack Category: Weak/no Authentication,Attack Category: Weak/no Encryption,Attack Category: Programming Vulnerabilities,Mitigation: Patching,Mitigation: Device replacement,Mitigation: Fundamental Changes,Mitigation: Regulations,
+ghena2014green,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X,X
+exposingCongestion2018,X,X,X,,,X,X,X,,,X,X,,,,X,,,,
