@@ -17,6 +17,8 @@
 <body>
 	<div class="navbar navbar-light bg-light">
 		<h1 class="navbar-brand">Systematization Framework</h1>
+		</br>
+		<p>This website is under development.</p>
 	</div>
 	<!--<h1>Systematization Framework</h1>-->
 	<div class="container-fluid" style="padding-top:15px">
@@ -126,6 +128,7 @@
 				catDiv.appendChild(cardBody);
 
 				// Starting new scope.
+                /*
 				{
 					// --------------------------------------------------------
 					// at: Create filter for "Authors".
@@ -197,6 +200,7 @@
 					filters[Acategory][others]["count"]		 =	0;
 
 				}
+                */
 				updatePapers();
 			});
 		});
@@ -365,11 +369,11 @@
 										Paper Details
 									</a>
 								</li>
-								<li class="nav-item">
-									<a class="nav-link" id="${paperId}-analysis-tab" data-toggle="tab" href="#${paperId}-analysis" role="tab" aria-controls="Two" aria-selected="false">
-										SoK
-									</a>
-								</li>
+								<!--<li class="nav-item">-->
+									<!--<a class="nav-link" id="${paperId}-analysis-tab" data-toggle="tab" href="#${paperId}-analysis" role="tab" aria-controls="Two" aria-selected="false">-->
+										<!--SoK-->
+									<!--</a>-->
+								<!--</li>-->
 							</ul>
 						</div>
 
@@ -378,14 +382,20 @@
 								<h6 class="card-title">
 									${curPaper["title"]}
 									 <span>
-										<a href="${curPaper["url"]}" target="_blank">
-											<i class="fa fa-file-pdf-o fa-fw"></i>
-										</a>
+										<!--<a href="${curPaper["url"]}" target="_blank">-->
+											<!--<i class="fa fa-file-pdf-o fa-fw"></i>-->
+										<!--</a>-->
+					`;
 
+				if (curPaper["url"]) {
+					html += `
 										<a href="${curPaper["url"]}" target="_blank">
 										<i class="fa fa-link fa-fw"></i>
 										</a>
-									</span>
+					`;
+				}
+				html += `
+																			</span>
 								</h6>
 								<span><span style="font-weight:bold">Venue: </span>
 									${curPaper["booktitle"] + curPaper["journal"] + ', ' + curPaper["year"]}
