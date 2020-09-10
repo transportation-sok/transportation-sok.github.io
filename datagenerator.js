@@ -1,6 +1,7 @@
 var filters = {};
 var old_data = null;
 var bib = {};
+var sok_data = {};
 var new_data = [];
 var cats = ["Component: ", "Technology: ", "Attack Category: ", "Mitigation: "];
 
@@ -17,9 +18,40 @@ d3.csv("bib.csv", function (bibtmp) {
         updatePapers();
         // ------------------------------------------------------------
 
+        // Find all category columns
+        var all_cat_cols = new Map();
+        // Initialize it with cats
+        cats.forEach(function(cat){
+            all_cat_cols.set(cat, []);
+        });
+
+        old_data.columns.forEach(function(col){
+            cats.forEach(function(cat){
+                if (col.startsWith(cat)) {
+                    all_cat_cols.get(cat).push(col);
+                }
+            });
+        });
+
         dtmp.forEach(function (p) {
             var b = bib[p["Bibref"]];
             new_data.push({...p, ...b});
+
+            // Build sok_data
+            paper_sok = {};
+            // forEach over Map gives value as the first argument and key as
+            // second.
+            all_cat_cols.forEach(function (cat_types, cat) {
+                paper_sok[cat] = [];
+
+                cat_types.forEach(function (ct) {
+                    if (p[ct].length > 0) {
+                        paper_sok[cat].push(ct.substring(cat.length));
+                    }
+                });
+            });
+
+            sok_data[p["Bibref"]] = paper_sok;
         });
 
         var venue = {};
