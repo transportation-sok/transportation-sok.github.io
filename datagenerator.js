@@ -1,7 +1,7 @@
 var filters = {};
 var old_data = null;
 var bib = {};
-var sok_data = {};
+var sok_data = new Map();
 var new_data = [];
 var cats = ["Component: ", "Technology: ", "Attack Category: ", "Mitigation: "];
 
@@ -38,20 +38,22 @@ d3.csv("bib.csv", function (bibtmp) {
             new_data.push({...p, ...b});
 
             // Build sok_data
-            paper_sok = {};
+            paper_sok = new Map();
             // forEach over Map gives value as the first argument and key as
             // second.
             all_cat_cols.forEach(function (cat_types, cat) {
-                paper_sok[cat] = [];
+                //paper_sok[cat] = [];
+                paper_sok.set(cat, []);
 
                 cat_types.forEach(function (ct) {
                     if (p[ct].length > 0) {
-                        paper_sok[cat].push(ct.substring(cat.length));
+                        paper_sok.get(cat).push(ct.substring(cat.length));
                     }
                 });
             });
 
-            sok_data[p["Bibref"]] = paper_sok;
+            //sok_data[p["Bibref"]] = paper_sok;
+            sok_data.set(p["Bibref"], paper_sok);
         });
 
         var venue = {};
@@ -366,11 +368,11 @@ function updatePapers( curr_filters ){
                                         Paper Details
                                     </a>
                                 </li>
-                                <!--<li class="nav-item">-->
-                                    <!--<a class="nav-link" id="${paperId}-analysis-tab" data-toggle="tab" href="#${paperId}-analysis" role="tab" aria-controls="Two" aria-selected="false">-->
-                                        <!--SoK-->
-                                    <!--</a>-->
-                                <!--</li>-->
+                                <li class="nav-item">
+                                    <a class="nav-link" id="${paperId}-analysis-tab" data-toggle="tab" href="#${paperId}-analysis" role="tab" aria-controls="Two" aria-selected="false">
+                                        SoK
+                                    </a>
+                                </li>
                             </ul>
                         </div>
 
@@ -379,11 +381,9 @@ function updatePapers( curr_filters ){
                                 <h6 class="card-title">
                                     ${curPaper["title"]}
                                      <span>
-                                        <!--<a href="${curPaper["url"]}" target="_blank">-->
-                                            <!--<i class="fa fa-file-pdf-o fa-fw"></i>-->
-                                        <!--</a>-->
-                    `;
+        `;
 
+        // at: Optionally add a link to the paper
         if (curPaper["url"]) {
             html += `
                                         <a href="${curPaper["url"]}" target="_blank">
@@ -391,6 +391,8 @@ function updatePapers( curr_filters ){
                                         </a>
                     `;
         }
+
+        // at: Continue building the html
         html += `
                                                                             </span>
                                 </h6>
@@ -404,11 +406,25 @@ function updatePapers( curr_filters ){
                                 </span>
                             </div>
                             <div class="tab-pane fade p-3" id="${paperId}-analysis" role="tabpanel" aria-labelledby="${paperId}-analysis-tab">
-                                <h5 class="card-title">
-                                    Tab Card Two
-                                </h5>
+                                <h6 class="card-title">
+                                    ${curPaper["title"]}
+                                </h6>
                                 <p class="card-text">
-                                    ${curPaper["booktitle"] + curPaper["journal"] + ', ' + curPaper["year"]}
+        `;
+
+        // at: Build the SoK card from sok_data
+        sok_data.get(curPaper["Bibref"]).forEach(function(sok_cats, cat) {
+            var sok = sok_cats.join(', ');
+            html += `
+                                    <span><span style="font-weight:bold">${cat} </span>
+                                        ${sok}
+                                    </span>
+                                    </br>
+            `;
+        });
+
+        // at: Continue building the rest of the html for current paper
+        html += `
                                 </p>
                             </div>
                         </div>
