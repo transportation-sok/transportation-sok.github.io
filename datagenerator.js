@@ -61,6 +61,10 @@ d3.csv("bib.csv", function (bibtmp) {
 
         new_data.forEach(function (p) {
             var v = p["booktitle"] + p["journal"];
+            // Skip if we do not have a venue.
+            // Currently, this happens for the books.
+            if (!v) return;
+
             if (venue[v] == null) venue[v] = 0;
             venue[v]++;
 
