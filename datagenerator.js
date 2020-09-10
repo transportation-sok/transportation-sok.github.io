@@ -52,7 +52,6 @@ d3.csv("bib.csv", function (bibtmp) {
                 });
             });
 
-            //sok_data[p["Bibref"]] = paper_sok;
             sok_data.set(p["Bibref"], paper_sok);
         });
 
@@ -382,7 +381,9 @@ function updatePapers( curr_filters ){
         `;
 
         // at: Create card with tabs for description.
-        var paperId = `paper-${curPaper["ID"]}`;
+        // Replacing ':' as it is causing issues with html tag id generation.
+        var paperId = `paper-${curPaper["ID"]}`.replaceAll(':', '');
+
         html = `
                 <div class="col-md-12">
                     <div class="card mb-2">
