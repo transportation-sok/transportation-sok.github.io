@@ -356,6 +356,27 @@ function updatePapers( curr_filters ){
         }
         curr++;
 
+        // at: Create html section for paper title.
+        var paperTitleHTML = `
+                              <h6 class="card-title">
+                                  ${curPaper["title"]}
+                                  <span>
+        `;
+
+        // at: Optionally add a link to the paper
+        if (curPaper["url"]) {
+            paperTitleHTML += `
+                                        <a href="${curPaper["url"]}" target="_blank">
+                                        <i class="fa fa-link fa-fw"></i>
+                                        </a>
+                    `;
+        }
+
+        // at: Continue building html for paper title
+        paperTitleHTML += `                 </span>
+                              </h6>
+        `;
+
         // at: Create card with tabs for description.
         var paperId = `paper-${curPaper["ID"]}`;
         html = `
@@ -378,24 +399,7 @@ function updatePapers( curr_filters ){
 
                         <div class="tab-content" id="${paperId}-tabContent">
                             <div class="tab-pane fade show active p-3" id="${paperId}-description" role="tabpanel" aria-labelledby="${paperId}-description-tab">
-                                <h6 class="card-title">
-                                    ${curPaper["title"]}
-                                     <span>
-        `;
-
-        // at: Optionally add a link to the paper
-        if (curPaper["url"]) {
-            html += `
-                                        <a href="${curPaper["url"]}" target="_blank">
-                                        <i class="fa fa-link fa-fw"></i>
-                                        </a>
-                    `;
-        }
-
-        // at: Continue building the html
-        html += `
-                                                                            </span>
-                                </h6>
+                                ${paperTitleHTML}
                                 <span><span style="font-weight:bold">Venue: </span>
                                     ${curPaper["booktitle"] + curPaper["journal"] + ', ' + curPaper["year"]}
                                 </span>
@@ -405,14 +409,15 @@ function updatePapers( curr_filters ){
                                     ${curPaper["author"]}
                                 </span>
                             </div>
-                            <div class="tab-pane fade p-3" id="${paperId}-analysis" role="tabpanel" aria-labelledby="${paperId}-analysis-tab">
-                                <h6 class="card-title">
-                                    ${curPaper["title"]}
-                                </h6>
-                                <p class="card-text">
         `;
 
         // at: Build the SoK card from sok_data
+        html += `
+                            <div class="tab-pane fade p-3" id="${paperId}-analysis" role="tabpanel" aria-labelledby="${paperId}-analysis-tab">
+                                ${paperTitleHTML}
+                                <p class="card-text">
+        `;
+
         sok_data.get(curPaper["Bibref"]).forEach(function(sok_cats, cat) {
             var sok = sok_cats.join(', ');
             html += `
@@ -426,7 +431,7 @@ function updatePapers( curr_filters ){
         // at: Continue building the rest of the html for current paper
         html += `
                                 </p>
-                            </div>
+                            </div> <!-- sok card ends here. -->
                         </div>
 
                     </div>
